@@ -1,13 +1,12 @@
 // ParentPage.tsx
-import React from "react";
 
 import AnimalYearComponent from "../src/components/AnimalYearComponent";
 
-const ParentPage: React.FC = () => {
+const ParentPage = () => {
   return (
     <div>
       {/* Title */}
-      <h1>Chinese Zpdiac</h1>
+      <h1>Chinese Zodiac</h1>
 
       <AnimalYearComponent />
     </div>

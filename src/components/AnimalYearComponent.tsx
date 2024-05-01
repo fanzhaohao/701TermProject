@@ -5,9 +5,10 @@ const AnimalYearComponent: React.FC = () => {
   // define year state
   const [year, setYear] = useState("");
   // define activeIndex state
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [isValid, setIsValid] = useState(true);
   let yearNumber = 0;
-  // animal object
+  // maping animal name by their index
   const animal: { [index: number]: string } = {
     0: "Monkey",
     1: "Rooster",
@@ -22,7 +23,7 @@ const AnimalYearComponent: React.FC = () => {
     10: "Horse",
     11: "Goat",
   };
-  // animal image object
+  // maping anmial image url by their index
   const animalImage: { [index: number]: string } = {
     0: "https://img.gejiba.com/images/1c0d4cdd0caf5e38ef60512759553b6b.jpg",
     1: "https://img.gejiba.com/images/fb197dd064f0ceb9aed639db47338b8f.jpg",
@@ -38,10 +39,16 @@ const AnimalYearComponent: React.FC = () => {
     11: "https://img.gejiba.com/images/34c869fdd5be3ef42cd9af7f4d549c60.jpg",
   };
   // handle input change
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     // year update
-    setYear(value);
+    if (value.match(/^[0-9]*$/)) {
+      setYear(value);
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+    }
+
     // update activeIndex
     setActiveIndex(value.length === 4 ? value.length - 1 : value.length);
   };
@@ -95,6 +102,11 @@ const AnimalYearComponent: React.FC = () => {
             alt={animal[yearNumber % 12]}
           />
         </div>
+      )}
+
+      {/* show error message */}
+      {!isValid && (
+        <div style={{ color: "red" }}>You can only enter numbers. </div>
       )}
       {/* reset button */}
       <div className="clear-button" onClick={clearInput}>
